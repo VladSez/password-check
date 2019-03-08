@@ -5,21 +5,21 @@ import Info from './Info';
 import styled from 'styled-components/macro';
 
 function hasNumber(password) {
-	if (password.match(/[0-9]/)) {
+	if (/[0-9]/.test(password)) {
 		return true;
 	}
 	return false;
 }
 
 function hasOneUppercaseLetter(password) {
-	if (password.match(/[A-Z]/)) {
+	if (/[A-Z]/.test(password)) {
 		return true;
 	}
 	return false;
 }
 
 function hasOneSpecialCharacter(password) {
-	if (password.match(/[^A-Za-z0-9]/)) { // matches any non-alphanumeric character
+	if (/[^A-Za-z0-9]/.test(password)) { // matches any non-alphanumeric character
 		return true;
 	}
 	return false;
