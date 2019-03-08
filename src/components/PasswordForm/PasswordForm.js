@@ -4,21 +4,84 @@ import Input from './Input';
 import Info from './Info';
 import styled from 'styled-components/macro';
 
+function hasNumber(password) {
+	if (password.match(/[0-9]/)) {
+		return true;
+	}
+	return false;
+}
+
+function hasOneUppercaseLetter(password) {
+	if (password.match(/[A-Z]/)) {
+		return true;
+	}
+	return false;
+}
+
+function hasOneSpecialCharacter(password) {
+	if (password.match(/[^A-Za-z0-9]/)) { // matches any non-alphanumeric character
+		return true;
+	}
+	return false;
+}
+
+function hasEightCharacters(password) {
+	if (password.length > 7) {
+		return true;
+	}
+	return false;
+}
+
 class PasswordForm extends React.Component {
 	state = {
-		password: null,
+		password: '',
 		checklist: [
-			{text: 'One Number', hasNumber: true},
-			{text:'One uppercase letter',hasOneUppercaseLetter: false },
-			{text:'One special character', hasOneSpecialCharacter: false},
-			{text:'Minimum of eight characters',hasEightCharacters: false}
+			{ text: 'One Number', hasNumber: false },
+			{ text: 'One uppercase letter', hasOneUppercaseLetter: false },
+			{ text: 'One special character', hasOneSpecialCharacter: false },
+			{ text: 'Minimum of eight characters', hasEightCharacters: false }
 		]
 	};
 
 	onChange = e => {
-		this.setState({
-			password: e.target.value
-		});
+		this.setState(
+			{
+				password: e.target.value
+			},
+			() => {
+				this.setState(state => {
+					return {
+						checklist: state.checklist.map(el => {
+							if (el.text === 'One Number') {
+								if (hasNumber(state.password)) {
+									return { ...el, hasNumber: true };
+								}
+								return { ...el, hasNumber: false };
+							}
+							if (el.text === 'One uppercase letter') {
+								if (hasOneUppercaseLetter(state.password)) {
+									return { ...el, hasOneUppercaseLetter: true };
+								}
+								return { ...el, hasOneUppercaseLetter: false };
+							}
+							if (el.text === 'One special character') {
+								if (hasOneSpecialCharacter(state.password)) {
+									return { ...el, hasOneSpecialCharacter: true };
+								}
+								return { ...el, hasOneSpecialCharacter: false };
+							}
+							if (el.text === 'Minimum of eight characters') {
+								if (hasEightCharacters(state.password)) {
+									return { ...el, hasEightCharacters: true };
+								}
+								return { ...el, hasEightCharacters: false };
+							}
+							return { ...el };
+						})
+					};
+				});
+			}
+		);
 	};
 	render() {
 		const { password, checklist } = this.state;
