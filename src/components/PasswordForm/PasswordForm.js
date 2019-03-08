@@ -19,7 +19,8 @@ function hasOneUppercaseLetter(password) {
 }
 
 function hasOneSpecialCharacter(password) {
-	if (/[^A-Za-z0-9]/.test(password)) { // matches any non-alphanumeric character
+	if (/[^A-Za-z0-9]/.test(password)) {
+		// matches any non-alphanumeric character
 		return true;
 	}
 	return false;
@@ -31,6 +32,20 @@ function hasEightCharacters(password) {
 	}
 	return false;
 }
+
+const Container = styled.div`
+	display: flex;
+	justify-content: center;
+`;
+
+const Form = styled.div`
+	color: #7f8180;
+	height: 300px;
+	width: 300px;
+	border: 2px solid #7f8180;
+	border-radius: 4px;
+	padding: 10px;
+`;
 
 class PasswordForm extends React.Component {
 	state = {
@@ -93,7 +108,6 @@ class PasswordForm extends React.Component {
 					{checklist.map(rule => (
 						<PasswordCheckRule {...rule} key={rule.text} />
 					))}
-					{/* <PasswordCheckList /> */}
 				</Form>
 			</Container>
 		);
@@ -101,17 +115,3 @@ class PasswordForm extends React.Component {
 }
 
 export default PasswordForm;
-
-const Container = styled.div`
-	display: flex;
-	justify-content: center;
-`;
-
-const Form = styled.div`
-	color: #7f8180;
-	height: 300px;
-	width: 300px;
-	border: 2px solid #7f8180;
-	border-radius: 4px;
-	padding: 10px;
-`;
